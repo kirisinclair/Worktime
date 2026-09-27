@@ -385,6 +385,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   <script>
     (function () {
       function ensureMeta() {
+        console.log('[meta-fix] ensureMeta run, title=' + JSON.stringify(document.title));
         if (document.title !== 'Worktime') document.title = 'Worktime';
         var icon = document.querySelector('link[rel="icon"]');
         if (!icon) {
