@@ -400,12 +400,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       ensureMeta();
       new MutationObserver(ensureMeta).observe(document.documentElement, { childList: true, subtree: true });
       window.addEventListener('load', ensureMeta);
-      var tries = 0;
-      var timer = setInterval(function () {
-        ensureMeta();
-        tries++;
-        if (tries > 20) clearInterval(timer);
-      }, 300);
+      setInterval(ensureMeta, 1000);
     })();
   </script>
 </body>
