@@ -385,18 +385,24 @@ document.addEventListener('DOMContentLoaded', async function() {
   <script>
     (function () {
       function ensureMeta() {
-        console.log('[meta-fix] ensureMeta run, title=' + JSON.stringify(document.title));
         if (document.title !== 'Worktime') document.title = 'Worktime';
-        var icon = document.querySelector('link[rel="icon"]');
-        if (!icon) {
-          icon = document.createElement('link');
+        var icons = document.querySelectorAll('link[rel="icon"]');
+        if (icons.length === 0) {
+          var icon = document.createElement('link');
           icon.rel = 'icon';
           icon.type = 'image/png';
+          icon.href = 'worktime-icon.png';
           document.head.appendChild(icon);
+        } else {
+          icons.forEach(function (icon, i) {
+            if (i > 0) { icon.remove(); return; }
+            if (icon.getAttribute('href') !== 'worktime-icon.png') {
+              icon.setAttribute('href', 'worktime-icon.png');
+            }
+          });
         }
-        if (icon.getAttribute('href') !== 'worktime-icon.png') {
-          icon.setAttribute('href', 'worktime-icon.png');
-        }
+        var titles = document.querySelectorAll('title');
+        for (var i = 1; i < titles.length; i++) titles[i].remove();
       }
       ensureMeta();
       new MutationObserver(ensureMeta).observe(document.documentElement, { childList: true, subtree: true });
